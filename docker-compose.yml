@@ -1,0 +1,31 @@
+services:
+  app:
+    build: .
+    container_name: ai-docquery
+    hostname: app_server
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    restart: unless-stopped
+    volumes:
+      - ./frontend:/app/frontend:ro
+    environment:
+      QDRANT_URL: "http://qdrant:6333"
+      QDRANT_API_KEY: ""
+      OLLAMA_API_URL: "http://host.docker.internal:11434"
+    depends_on:
+      - qdrant
+
+  qdrant:
+    # Using 'latest' to avoid pulling a non-existing specific tag during setup.
+    image: qdrant/qdrant:latest
+    container_name: ai-docquery-qdrant
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+
+volumes:
+  qdrant_storage:
+    driver: local
