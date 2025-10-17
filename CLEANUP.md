@@ -32,6 +32,20 @@ If you want me to push these changes to GitHub, confirm that the remote reposito
 If you want me to purge `.env` values from history before pushing, confirm and I'll proceed with guidance and the rewrite (requires force-push).
 
 -- cleanup automated on your machine
+
+Post-merge cleanup note
+-----------------------
+
+The repository history was rewritten and a clean root commit was pushed to `origin/main` to remove large
+binary files (notably Python virtual environment artifacts under `.venv/`). A backup branch named
+`backup/pre-force-main` was created pointing to the previous remote history before the forced update. If
+you collaborate with others, let them know they should re-clone or run `git fetch origin && git reset --hard
+origin/main` to sync with the rewritten history.
+
+If you want me to remove other paths from history (for example specific large files or accidental commits),
+I can run a targeted history rewrite (git filter-repo or BFG) and force-push again — confirm before I
+proceed.
+
 Repository cleanup summary
 
 What I removed or untracked
